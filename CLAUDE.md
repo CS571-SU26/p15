@@ -53,7 +53,7 @@ Project/
         └── NotFound.tsx    # catch-all `*` route
 ```
 
-Dummy `Home`/`About`/`NotFound` pages exist to prove the stack is wired up
+Placeholder `Home`/`About`/`NotFound` pages exist to prove the stack is wired up
 correctly. Replace their contents with real pages as the project grows; keep
 new pages under `src/pages/` and register them in `App.tsx`.
 

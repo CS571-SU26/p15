@@ -5,7 +5,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center gap-6 text-center">
-      <h1 className="text-3xl font-bold text-gray-900">Welcome to the dummy app</h1>
+      <h1 className="text-3xl font-bold text-gray-900">Welcome to the placeholder app</h1>
       <p className="max-w-prose text-gray-600">
         This is a placeholder page proving that React, Tailwind CSS, React Router, and
         Vite are wired up correctly. Replace this content with the real project.
