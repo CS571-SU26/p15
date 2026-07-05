@@ -3,8 +3,12 @@
 ## What this is
 
 A **client-side-only** single-page application hosted on GitHub Pages at
-`https://cs571-su26.github.io/p0/`. No server-side code, no Next.js, no SSR —
-everything runs in the browser.
+`https://joshkemp4.github.io/CS571Project/` (repo: `joshkemp4/CS571Project`).
+No server-side code, no Next.js, no SSR — everything runs in the browser.
+
+Note: this may later move to a course-org repo (e.g. `CS571-SU26/p0`). If
+that happens, update the base path everywhere it's referenced below (search
+for `CS571Project`).
 
 ## Stack
 
@@ -24,8 +28,8 @@ everything runs in the browser.
   local/mock data.
 - **All app files live under this `Project/` folder.** This folder is
   standalone — treat it as the repo root when reasoning about paths.
-- **Must deploy cleanly to GitHub Pages** at `/p0/`. See "GitHub Pages base
-  path" below before changing routing or asset paths.
+- **Must deploy cleanly to GitHub Pages** at `/CS571Project/`. See "GitHub
+  Pages base path" below before changing routing or asset paths.
 
 ## Project structure
 
@@ -33,12 +37,12 @@ everything runs in the browser.
 Project/
 ├── CLAUDE.md              # this file
 ├── index.html             # entry HTML; has the GH Pages SPA redirect script
-├── vite.config.ts         # sets base: '/p0/' and Tailwind + React plugins
+├── vite.config.ts         # sets base: '/CS571Project/' and Tailwind + React plugins
 ├── public/
 │   ├── favicon.svg
 │   └── 404.html           # GH Pages SPA fallback redirect (see below)
 └── src/
-    ├── main.tsx            # mounts <BrowserRouter basename="/p0">
+    ├── main.tsx            # mounts <BrowserRouter basename="/CS571Project">
     ├── App.tsx             # <Routes> tree
     ├── index.css           # `@import "tailwindcss";` — no other global CSS
     ├── components/
@@ -55,22 +59,25 @@ new pages under `src/pages/` and register them in `App.tsx`.
 
 ## GitHub Pages base path
 
-The repo is `CS571-SU26/p0`, so the site is served from a subpath
-(`/p0/`), not domain root. Two places must stay in sync with that repo name:
+The repo is `joshkemp4/CS571Project`, so the site is served from a subpath
+(`/CS571Project/`), not domain root. Two places must stay in sync with that
+repo name:
 
-1. `vite.config.ts` — `base: '/p0/'`
-2. `src/main.tsx` — `<BrowserRouter basename="/p0">`
+1. `vite.config.ts` — `base: '/CS571Project/'`
+2. `src/main.tsx` — `<BrowserRouter basename="/CS571Project">`
 
-If the repo is ever renamed, update both.
+If the repo is ever renamed (or moved to a different account/org), update
+both, and update the comment in `public/404.html`.
 
 ### Why there's a `public/404.html`
 
 GitHub Pages is a static file host with no server-side rewrites. A
-client-side route like `/p0/about` only exists in the React Router config —
-there's no real `about` file on the server. On first load GitHub Pages
-serves `404.html` for a shot at `/p0/about`, but a *refresh or a direct
-link* to that URL still hits GitHub Pages' file server first, which returns
-`404.html`. `public/404.html` encodes the intended path into a query string
+client-side route like `/CS571Project/about` only exists in the React
+Router config — there's no real `about` file on the server. On first load
+GitHub Pages serves `404.html` for a shot at `/CS571Project/about`, but a
+*refresh or a direct link* to that URL still hits GitHub Pages' file server
+first, which returns `404.html`. `public/404.html` encodes the intended path
+into a query string
 and redirects to `index.html`; a small inline script in `index.html` decodes
 it back into a real path before React Router mounts. (Standard technique:
 https://github.com/rafgraph/spa-github-pages.) Don't remove either script
@@ -80,7 +87,7 @@ unless deep-link/refresh support is intentionally being dropped.
 
 ```bash
 npm install       # install deps
-npm run dev       # local dev server (served at http://localhost:5173/p0/)
+npm run dev       # local dev server (served at http://localhost:5173/CS571Project/)
 npm run build     # type-check (tsc -b) + production build to dist/
 npm run preview   # preview the production build locally
 npm run lint      # ESLint
@@ -90,7 +97,8 @@ npm run lint      # ESLint
 
 Build output goes to `dist/`. Deployment is manual (build locally, publish
 `dist/` to GitHub Pages) — no CI/CD workflow is set up. When deploying,
-confirm `dist/index.html` references assets under `/p0/...`, not `/...`.
+confirm `dist/index.html` references assets under `/CS571Project/...`, not
+`/...`.
 
 ## Conventions
 
@@ -100,7 +108,7 @@ confirm `dist/index.html` references assets under `/p0/...`, not `/...`.
   utilities can't express.
 - Use `NavLink`/`Link` from `react-router-dom` for internal navigation, never
   plain `<a href>` — plain anchors force a full page reload and can break on
-  the `/p0/` base path.
+  the `/CS571Project/` base path.
 - New routes: add a page component under `src/pages/`, then add a `<Route>`
   for it inside the `<Route path="/" element={<Layout />}>` block in
   `src/App.tsx` so it inherits the shared nav/footer.
