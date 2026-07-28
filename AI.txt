@@ -1,0 +1,12 @@
+Web Project checkin:
+AI - 90%
+- pull data from DNR API (AI)
+- design the park-specific card (AI)
+- design the map (AI)
+- identify how to find the center of a geographic polygon; API gave coordinates in the shape of an polygon (AI)
+- develop the "visited" parks feature (AI)
+
+Me - 10%
+- develop the overall placement of the website (me) 
+- develop the website navigation/header (me)
+- researched react-leaflet (me)
