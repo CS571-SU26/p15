@@ -1,5 +1,6 @@
 import centerOfMass from '@turf/center-of-mass'
 import type { Feature, Geometry } from 'geojson'
+import { fetchAcreageByName } from './dnrAcreage'
 import type { Park, ParkType } from '../types/park'
 
 const PARKS_QUERY_URL =
@@ -18,7 +19,7 @@ interface ParkProperties {
 }
 
 export async function fetchParks(): Promise<Park[]> {
-  const response = await fetch(PARKS_QUERY_URL)
+  const [response, acreageByName] = await Promise.all([fetch(PARKS_QUERY_URL), fetchAcreageByName()])
   if (!response.ok) {
     throw new Error(`Failed to fetch parks: ${response.status} ${response.statusText}`)
   }
@@ -36,6 +37,7 @@ export async function fetchParks(): Promise<Park[]> {
       type: feature.properties.PROP_TYPE,
       infoUrl: feature.properties.INFO_URL,
       position: [lat, lng],
+      acres: acreageByName.get(feature.properties.PROP_NAME) ?? null,
     }
   })
 }

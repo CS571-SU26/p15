@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+/* Manual (class-based) dark mode instead of the OS-preference-only default,
+   so the Settings page can toggle it directly. */
+@custom-variant dark (&:where(.dark, .dark *));

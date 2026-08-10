@@ -37,6 +37,7 @@ again, update the base path everywhere it's referenced below (search for
 ```
 Project/
 ├── CLAUDE.md              # this file
+├── ARCHITECTURE.md        # file-by-file map of src/ and how it connects — read this first for app logic
 ├── index.html             # entry HTML; has the GH Pages SPA redirect script
 ├── vite.config.ts         # sets base: '/p15/', outDir: 'docs', Tailwind + React plugins
 ├── docs/                  # BUILD OUTPUT — committed to main; this is what GitHub Pages serves
@@ -47,18 +48,26 @@ Project/
 └── src/
     ├── main.tsx            # mounts <BrowserRouter basename="/p15">
     ├── App.tsx             # <Routes> tree
-    ├── index.css           # `@import "tailwindcss";` — no other global CSS
-    ├── components/
-    │   └── Layout.tsx      # shared nav/footer, renders <Outlet />
+    ├── index.css           # Tailwind import + dark-mode custom-variant (see Conventions)
+    ├── assets/             # DNR logo, per-type/visited-state marker icon SVGs
+    ├── components/         # Layout, ParkMap, ParkBrowser, ParkCard, ParkFilters
+    ├── context/            # ParksContext (DNR data + visited set), PreferencesContext (theme/motion)
+    ├── hooks/              # useParkFilters, useParkSummary, useGeolocation
+    ├── lib/                # DNR/Wikipedia fetch + transform logic, marker icon generation
+    ├── types/              # Park type
     └── pages/
         ├── Home.tsx
-        ├── About.tsx
+        ├── MyParks.tsx
+        ├── Settings.tsx
+        ├── About.tsx        # still the original Vite-scaffold placeholder — not yet written
         └── NotFound.tsx    # catch-all `*` route
 ```
 
-Placeholder `Home`/`About`/`NotFound` pages exist to prove the stack is wired up
-correctly. Replace their contents with real pages as the project grows; keep
-new pages under `src/pages/` and register them in `App.tsx`.
+This is now a real app (a Wisconsin State Park tracker — map, cards,
+filters, visited-tracking; see [ARCHITECTURE.md](ARCHITECTURE.md) for how
+the pieces connect), not the original scaffold. `About` is the one
+remaining placeholder page. Keep new pages under `src/pages/` and register
+them in `App.tsx`.
 
 ## GitHub Pages base path
 
@@ -124,12 +133,21 @@ live site updated — it will not update itself. When deploying, confirm
 ## Conventions
 
 - Styling is Tailwind utility classes in JSX. Avoid adding new global CSS
-  files or CSS-in-JS — keep `src/index.css` to the single `@import
-  "tailwindcss";` line unless there's a concrete need for custom CSS that
-  utilities can't express.
+  files or CSS-in-JS — `src/index.css` has grown past a single line, but
+  only for two justified exceptions: the `@custom-variant dark` line
+  (switches Tailwind's `dark:` variant to class-based so it can be toggled
+  manually from Settings, instead of OS-preference-only) and Leaflet's own
+  stylesheet (imported directly in `main.tsx`, since it's a library
+  requirement, not project styling). Don't add anything beyond that without
+  a similarly concrete reason.
 - Use `NavLink`/`Link` from `react-router-dom` for internal navigation, never
   plain `<a href>` — plain anchors force a full page reload and can break on
   the `/p15/` base path.
 - New routes: add a page component under `src/pages/`, then add a `<Route>`
   for it inside the `<Route path="/" element={<Layout />}>` block in
   `src/App.tsx` so it inherits the shared nav/footer.
+- All `localStorage` keys are namespaced `wsps:<name>` (visited parks,
+  theme, reduced-motion). Keep new persisted state under the same prefix.
+- Dark mode: pair every `text-gray-*`/`bg-*`/`border-*` utility with a
+  `dark:` variant when touching UI — the whole app is expected to look
+  correct in both themes, not just light.

@@ -9,6 +9,7 @@ import markerShadow from 'leaflet/dist/images/marker-shadow.png'
 import './index.css'
 import App from './App.tsx'
 import { ParksProvider } from './context/ParksContext'
+import { PreferencesProvider } from './context/PreferencesContext'
 
 // Leaflet's default marker icon URLs are relative to the page and 404 once
 // bundled by Vite (doubly so under the /p15/ GH Pages base path) — point
@@ -26,9 +27,11 @@ L.Icon.Default.mergeOptions({
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter basename="/p15">
-      <ParksProvider>
-        <App />
-      </ParksProvider>
+      <PreferencesProvider>
+        <ParksProvider>
+          <App />
+        </ParksProvider>
+      </PreferencesProvider>
     </BrowserRouter>
   </StrictMode>,
 )

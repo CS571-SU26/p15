@@ -1,5 +1,6 @@
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { fetchParks } from '../lib/parks'
+import { ParksContext, type ParksContextValue } from '../hooks/useParks'
 import type { Park } from '../types/park'
 
 const VISITED_STORAGE_KEY = 'wsps:visitedParks'
@@ -12,16 +13,6 @@ function loadVisited(): Set<number> {
     return new Set()
   }
 }
-
-interface ParksContextValue {
-  parks: Park[]
-  loading: boolean
-  error: string | null
-  isVisited: (id: number) => boolean
-  toggleVisited: (id: number) => void
-}
-
-const ParksContext = createContext<ParksContextValue | null>(null)
 
 export function ParksProvider({ children }: { children: ReactNode }) {
   const [parks, setParks] = useState<Park[]>([])
@@ -68,17 +59,10 @@ export function ParksProvider({ children }: { children: ReactNode }) {
           }
           return next
         }),
+      clearVisited: () => setVisited(new Set()),
     }),
     [parks, loading, error, visited],
   )
 
   return <ParksContext.Provider value={value}>{children}</ParksContext.Provider>
-}
-
-export function useParks() {
-  const context = useContext(ParksContext)
-  if (!context) {
-    throw new Error('useParks must be used within a ParksProvider')
-  }
-  return context
 }

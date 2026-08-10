@@ -7,6 +7,7 @@ export interface Park {
   infoUrl: string
   /** [latitude, longitude] centroid of the property boundary */
   position: [number, number]
+  acres: number | null
 }
 
 export const PARK_TYPE_LABELS: Record<ParkType, string> = {
