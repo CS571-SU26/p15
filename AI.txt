@@ -10,3 +10,21 @@ Me - 10%
 - develop the overall placement of the website (me) 
 - develop the website navigation/header (me)
 - researched react-leaflet (me)
+
+Web Project Final:
+AI - 90%
+- Additional DNR API for acerage
+- Wikipedia API for additional park details
+- Settings Tab:
+--> Dark Mode
+--> Reset Visited Parks list
+--> Reduce Motion
+- Improved Card View
+- new library for map icons
+- visited park progress
+- Find Parks near Me
+- Additional sorting/filtering capabilities
+
+Me - 10%
+- resolve issues with parks that didn't have a clear match to a Wikipedia page (i.e., "Baraboo Hills State Recreation Area" = "Devil's Lake State Park")
+- choose the icons for each park type (state park = tent, state forest = tree, etc.)

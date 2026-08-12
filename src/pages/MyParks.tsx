@@ -62,6 +62,8 @@ export default function MyParks() {
         onRequestLocation={requestLocation}
         locationLoading={locationLoading}
         locationError={locationError}
+        resultCount={filteredParks.length}
+        totalCount={visitedCount}
       />
 
       <ParkBrowser

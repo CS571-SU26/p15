@@ -44,6 +44,8 @@ export default function Home() {
         onRequestLocation={requestLocation}
         locationLoading={locationLoading}
         locationError={locationError}
+        resultCount={filteredParks.length}
+        totalCount={parks.length}
       />
 
       <ParkBrowser

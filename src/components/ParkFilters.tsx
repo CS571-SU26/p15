@@ -21,6 +21,8 @@ interface ParkFiltersProps {
   onRequestLocation: () => void
   locationLoading: boolean
   locationError: string | null
+  resultCount: number
+  totalCount: number
 }
 
 export default function ParkFilters({
@@ -34,6 +36,8 @@ export default function ParkFilters({
   onRequestLocation,
   locationLoading,
   locationError,
+  resultCount,
+  totalCount,
 }: ParkFiltersProps) {
   function toggleType(type: ParkType) {
     const next = new Set(selectedTypes)
@@ -51,6 +55,10 @@ export default function ParkFilters({
 
   return (
     <section className="flex flex-col gap-3 rounded-md border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
+      <p className="text-sm text-gray-500 dark:text-gray-400">
+        Showing {resultCount} of {totalCount} parks
+      </p>
+
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap gap-2">
           {ALL_TYPES.map((type) => {

@@ -58,7 +58,7 @@ export default function ParkMap({ parks, highlightedParkId, userPosition }: Park
   const tileLayer = TILE_LAYERS[theme]
 
   return (
-    <section className="relative h-125 w-full">
+    <section className="relative h-160 w-full">
       <div className="h-full w-full overflow-hidden rounded-md border border-gray-300 dark:border-gray-700">
         <MapContainer
           center={WISCONSIN_CENTER}
